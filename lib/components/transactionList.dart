@@ -14,7 +14,23 @@ class TransactionList extends StatelessWidget {
     return Container(
       height: 600,
 
-      child: ListView.builder(
+      child: transactions.isEmpty ? Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+
+            child: Text('Nenhuma Transação Cadastrada!', style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600
+            )),
+          ),
+
+          Container(
+            height: 200,
+            child: Image.asset('assets/images/waiting.png', fit: BoxFit.cover),
+          )
+        ],
+      ) : ListView.builder(
         itemCount: transactions.length,
         itemBuilder: (_, index) {
           final transaction = transactions[index];

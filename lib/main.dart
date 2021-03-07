@@ -29,9 +29,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage>  {
-  final _transactions = [
-    Transactions(id: 't1', title: 'Conta de Luz', value: 250.20, date: DateTime.now()),
-    Transactions(id: 't2', title: 'Tênis Jordan One Take II', value: 549.99, date: DateTime.now()),
+  final List<Transactions> _transactions = [
+    // Transactions(id: 't1', title: 'Conta de Luz', value: 250.20, date: DateTime.now()),
+    // Transactions(id: 't2', title: 'Tênis Jordan One Take II', value: 549.99, date: DateTime.now()),
   ];
 
   _addNewTransaction(String title, double value) {
@@ -75,7 +75,8 @@ class _MyHomePageState extends State<MyHomePage>  {
                 child: Text('Gráfico'),
               ),
             ),
-            TransactionList(_transactions),
+
+          TransactionList(_transactions),
           ],
         ),
       ),
