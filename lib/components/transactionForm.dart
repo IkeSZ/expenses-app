@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
+  final void Function(String, double) onSubmit;
+
+  TransactionForm({ this.onSubmit });
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
+
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text) ?? 0.0;
+
+    if(title.isEmpty || value <= 0) {
+      return;
+    }
+
+    return widget.onSubmit(title, value);
+  }
 
   Widget build(BuildContext ctx) {
     return  Card(
@@ -16,12 +36,17 @@ class TransactionForm extends StatelessWidget {
             TextField(
               controller: titleController,
 
+              onSubmitted: (_) => _submitForm(),
+
               decoration: InputDecoration(
                   labelText: 'Título'
               ),
             ),
             TextField(
               controller: valueController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+
+              onSubmitted: (_) => _submitForm(),
 
               decoration: InputDecoration(
                   labelText: 'Valor (R\$)'
@@ -41,7 +66,7 @@ class TransactionForm extends StatelessWidget {
                     color: Colors.deepPurple,
                     textColor: Colors.white,
 
-                    onPressed: () {},
+                    onPressed: _submitForm
                   ),
                 ],
               ),

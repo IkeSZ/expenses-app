@@ -11,41 +11,48 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return Column(
-      children: transactions.map((transaction) {
-        return Card(
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                padding: EdgeInsets.all(10),
+    return Container(
+      height: 600,
 
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.deepPurple,
+      child: ListView.builder(
+        itemCount: transactions.length,
+        itemBuilder: (_, index) {
+          final transaction = transactions[index];
 
-                      width: 2,
-                    )
+          return Card(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding: EdgeInsets.all(10),
+
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(ctx).primaryColor,
+
+                        width: 2,
+                      )
+                  ),
+
+                  child: Text(
+                      'R\$ ${transaction.value.toStringAsFixed(2)}',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(ctx).primaryColor)
+                  ),
                 ),
 
-                child: Text(
-                    'R\$ ${transaction.value.toStringAsFixed(2)}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.deepPurple)
-                ),
-              ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [
-                  Text(transaction.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text(DateFormat('d MMM y').format(transaction.date), style: TextStyle(color: Colors.grey)),
-                ],
-              )
-            ],
-          ),
-        );
-      }).toList(),
+                  children: [
+                    Text(transaction.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(DateFormat('d MMM y').format(transaction.date), style: TextStyle(color: Colors.grey)),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
