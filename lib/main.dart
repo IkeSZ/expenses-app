@@ -31,18 +31,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>  {
   final List<Transactions> _transactions = [
-    // Transactions(
-    //     id: 't0',
-    //     title: 'Conta de Luz',
-    //     value: 250.20,
-    //     date: DateTime.now().subtract(Duration(days: 33)),
-    // ),
-    // Transactions(
-    //     id: 't1',
-    //     title: 'Tênis Jordan One Take II',
-    //     value: 549.99,
-    //     date: DateTime.now().subtract(Duration(days: 3)),
-    // ),
+    Transactions(
+        id: 't0',
+        title: 'Conta de Luz',
+        value: 250.20,
+        date: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    Transactions(
+        id: 't1',
+        title: 'Tênis Jordan One Take II',
+        value: 549.99,
+        date: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transactions(
+      id: 't2',
+      title: 'Conta de Água',
+      value: 90.00,
+      date: DateTime.now(),
+    ),
+    Transactions(
+      id: 't3',
+      title: 'Milkshake do BK',
+      value: 12.50,
+      date: DateTime.now(),
+    ),
   ];
 
   List<Transactions> get _recentTransaction {
@@ -88,17 +100,11 @@ class _MyHomePageState extends State<MyHomePage>  {
           crossAxisAlignment: CrossAxisAlignment.stretch,
 
           children: <Widget>[
-            _transactions.isEmpty ? Container() : Chart(_recentTransaction),
+            Chart(_recentTransaction),
             TransactionList(_transactions),
           ],
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white),
-        onPressed: () => _openTransactionFormModal(ctx),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

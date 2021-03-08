@@ -8,11 +8,46 @@ class TransactionList extends StatelessWidget {
   final List<Transactions> transactions;
 
   TransactionList(this.transactions);
+  
+  _fixHighPrice(double value) {
+    if (value >= 100000) {
+      String stringValue = value.toString();
+      stringValue = stringValue.substring(0, 3);
 
+      if (value >= 1000000) {
+        String stringValue = value.toString();
+
+        final firstValueNumber = stringValue.substring(0, 1);
+        final decimalValueNumber = stringValue.substring(2, 4);
+
+        if (value >= 10000000) {
+          String stringValue = value.toString();
+
+          final firstValueNumber = stringValue.substring(0, 2);
+          final decimalValueNumber = stringValue.substring(4, 6);
+
+          if (value >= 100000000) {
+            String stringValue = value.toString();
+
+            return '${stringValue.substring(0, 3)}M';
+          }
+
+          return '$firstValueNumber.${decimalValueNumber}M';
+        }
+
+        return '$firstValueNumber.${decimalValueNumber}M';
+      }
+
+      return '${stringValue}K';
+    }
+
+    return value;
+  }
+  
   @override
   Widget build(BuildContext ctx) {
     return Container(
-      height: 600,
+      height: 540,
 
       child: transactions.isEmpty ? Column(
         children: [
@@ -36,37 +71,34 @@ class TransactionList extends StatelessWidget {
           final transaction = transactions[index];
 
           return Card(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  padding: EdgeInsets.all(10),
+            elevation: 4,
+            margin: EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 5,
+            ),
 
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(ctx).primaryColor,
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.deepPurple[600],
 
-                        width: 2,
-                      )
-                  ),
+                child: Padding(
+                  padding: EdgeInsets.all(6),
 
-                  child: Text(
-                      'R\$ ${transaction.value.toStringAsFixed(2)}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(ctx).primaryColor)
+                  child: FittedBox(
+                    child: Text('R\$ ${_fixHighPrice(transaction.value)}'),
                   ),
                 ),
+              ),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              title: Text(transaction.title, style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              )),
 
-                  children: [
-                    Text(transaction.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    Text(DateFormat('d MMM y').format(transaction.date), style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w300
-                    )),
-                  ],
-                )
-              ],
+              subtitle: Text(
+                DateFormat('d MMM y').format(transaction.date),
+              ),
             ),
           );
         },
