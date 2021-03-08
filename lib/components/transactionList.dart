@@ -6,10 +6,11 @@ import '../models/transactions.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transactions> transactions;
+  final void Function(String id) removeTransactionFc;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.removeTransactionFc);
   
-  _fixHighPrice(double value) {
+  _fixHighValue(double value) {
     if (value >= 100000) {
       String stringValue = value.toString();
       stringValue = stringValue.substring(0, 3);
@@ -43,7 +44,7 @@ class TransactionList extends StatelessWidget {
 
     return value;
   }
-  
+
   @override
   Widget build(BuildContext ctx) {
     return Container(
@@ -71,10 +72,10 @@ class TransactionList extends StatelessWidget {
           final transaction = transactions[index];
 
           return Card(
-            elevation: 4,
+            elevation: 6,
             margin: EdgeInsets.symmetric(
               vertical: 8,
-              horizontal: 5,
+              horizontal: 7,
             ),
 
             child: ListTile(
@@ -86,7 +87,7 @@ class TransactionList extends StatelessWidget {
                   padding: EdgeInsets.all(6),
 
                   child: FittedBox(
-                    child: Text('R\$ ${_fixHighPrice(transaction.value)}'),
+                    child: Text('R\$ ${_fixHighValue(transaction.value)}'),
                   ),
                 ),
               ),
@@ -98,6 +99,12 @@ class TransactionList extends StatelessWidget {
 
               subtitle: Text(
                 DateFormat('d MMM y').format(transaction.date),
+              ),
+
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+
+                onPressed: () => removeTransactionFc(transaction.id),
               ),
             ),
           );

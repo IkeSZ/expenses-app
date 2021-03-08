@@ -33,7 +33,7 @@ class Chart extends StatelessWidget {
       }
 
       return { 'day': weekDayAbbreviation, 'value': totalSum };
-    });
+    }).reversed.toList();
   }
 
   double get _weekTotalValue {
@@ -54,12 +54,12 @@ class Chart extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-          children: recentTransactions.isEmpty ? [] : _groupedTransactions.map((transaction) {
+          children: _groupedTransactions.map((transaction) {
             return Expanded(
               child: ChartBar(
                 weekDayLabel: transaction['day'],
                 priceValue: transaction['value'],
-                percentage: (transaction['value'] as double) / _weekTotalValue,
+                percentage: _weekTotalValue == 0 ? 0 : (transaction['value'] as double) / _weekTotalValue,
               ),
             );
           }).toList(),
