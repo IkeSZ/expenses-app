@@ -9,52 +9,62 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 20,
+    return LayoutBuilder(
+      builder: (content, constrains) {
+        return Column(
+          children: <Widget>[
+            Container(
+              height: constrains.maxHeight * 0.15,
 
-          child: FittedBox(
-            child: Text('${priceValue.toStringAsFixed(2)}'),
-          ),
-        ),
-
-        SizedBox(height: 5),
-
-        Container(
-          height: 60,
-          width: 10,
-
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1.0),
-                  borderRadius: BorderRadius.circular(5),
-
-                  color: Color.fromRGBO(220, 220, 220, 0.5)
-                ),
+              child: FittedBox(
+                child: Text('${priceValue.toStringAsFixed(2)}'),
               ),
+            ),
 
-              FractionallySizedBox(
-                heightFactor: percentage,
+            SizedBox(height: constrains.maxHeight * 0.05),
 
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Theme.of(ctx).primaryColor,
+            Container(
+              height: constrains.maxHeight * 0.6,
+              width: 10,
+
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1.0),
+                        borderRadius: BorderRadius.circular(5),
+
+                        color: Color.fromRGBO(220, 220, 220, 0.5)
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
 
-        SizedBox(height: 5),
-        Text(weekDayLabel),
-      ],
+                  FractionallySizedBox(
+                    heightFactor: percentage,
+
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Theme.of(ctx).primaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height: constrains.maxHeight * 0.05),
+            Container(
+              height: constrains.maxHeight * 0.15,
+
+              child: FittedBox(
+                child: Text(weekDayLabel),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }

@@ -47,10 +47,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return Container(
-      height: 540,
-
-      child: transactions.isEmpty ? Column(
+    return transactions.isEmpty ? Column(
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -109,7 +106,6 @@ class TransactionList extends StatelessWidget {
             ),
           );
         },
-      ),
     );
   }
 }
