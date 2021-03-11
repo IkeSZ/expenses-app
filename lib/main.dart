@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>  {
   final List<Transactions> _transactions = [];
+  bool _showChart = false;
 
   List<Transactions> get _recentTransaction {
     return _transactions.where((transaction) {
@@ -62,20 +63,31 @@ class _MyHomePageState extends State<MyHomePage>  {
   }
 
   _openTransactionFormModal(BuildContext ctx) {
-    showModalBottomSheet(context: ctx, builder: (context) {
+    showModalBottomSheet(isScrollControlled: true, context: ctx, builder: (context) {
       return TransactionForm(onSubmit: _addNewTransaction);
     });
   }
 
   @override
   Widget build(BuildContext ctx) {
+    bool isLandscape = MediaQuery.of(ctx).orientation == Orientation.landscape;
+
     final _appBar = AppBar(title: Text('Despesas Pessoais', style: TextStyle(
       fontSize: 20 * MediaQuery.of(ctx).textScaleFactor
     )), actions: <Widget>[
+      if (isLandscape)
+        IconButton(
+          icon: Icon(_showChart ? Icons.list : Icons.pie_chart),
+          onPressed: () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
+        ),
       IconButton(
         icon: Icon(Icons.add),
           onPressed: () => _openTransactionFormModal(ctx),
-        )
+        ),
       ],
     );
 
@@ -89,12 +101,14 @@ class _MyHomePageState extends State<MyHomePage>  {
           crossAxisAlignment: CrossAxisAlignment.stretch,
 
           children: <Widget>[
+            if (_showChart || !isLandscape)
             Container(
-              height: _availableHeight * 0.30,
+              height: _availableHeight * (isLandscape ? 0.7 : 0.3),
 
               child: Chart(_recentTransaction),
             ),
 
+            if(!_showChart || !isLandscape)
             Container(
               height: _availableHeight * 0.70,
 

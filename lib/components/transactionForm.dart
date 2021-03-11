@@ -44,78 +44,85 @@ class _TransactionFormState extends State<TransactionForm> {
     });
   }
 
-  Widget build(BuildContext ctx) {
-    return  Card(
-      elevation: 5,
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
 
-      child: Container(
-        padding: const EdgeInsets.all(10),
+        child: Container(
+          padding: const EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: 10
+          ),
 
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
+          child: Column(
+            children: [
+              TextField(
+                controller: _titleController,
 
-              onSubmitted: (_) => _submitForm(),
+                onSubmitted: (_) => _submitForm(),
 
-              decoration: InputDecoration(
-                  labelText: 'Título'
+                decoration: InputDecoration(
+                    labelText: 'Título'
+                ),
               ),
-            ),
-            TextField(
-              controller: _valueController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              TextField(
+                controller: _valueController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
 
-              onSubmitted: (_) => _submitForm(),
+                onSubmitted: (_) => _submitForm(),
 
-              decoration: InputDecoration(
-                  labelText: 'Valor (R\$)'
+                decoration: InputDecoration(
+                    labelText: 'Valor (R\$)'
+                ),
               ),
-            ),
 
-            Container(
-              height: 70,
-              alignment: Alignment.bottomCenter,
+              Container(
+                height: 70,
+                alignment: Alignment.bottomCenter,
 
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                        _selectedDate == null ? 'Nenhuma data selecionada!!'
-                        : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}'
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                          _selectedDate == null ? 'Nenhuma data selecionada!!'
+                              : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}'
+                      ),
                     ),
-                  ),
 
-                  FlatButton(
-                    onPressed: _showDatePicker,
-                    textColor: Theme.of(context).primaryColor,
+                    FlatButton(
+                        onPressed: _showDatePicker,
+                        textColor: Theme.of(context).primaryColor,
 
-                    child: Text('Selecionar Data', style: TextStyle(
-                        fontWeight: FontWeight.w600
-                    ))),
-                ],
+                        child: Text('Selecionar Data', style: TextStyle(
+                            fontWeight: FontWeight.w600
+                        ))),
+                  ],
+                ),
               ),
-            ),
 
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
 
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('Nova Transação'),
+                  children: <Widget>[
+                    RaisedButton(
+                        child: Text('Nova Transação'),
 
-                    color: Colors.deepPurple,
-                    textColor: Colors.white,
+                        color: Colors.deepPurple,
+                        textColor: Colors.white,
 
-                    onPressed: _submitForm
-                  ),
-                ],
-              ),
-            )
-          ],
+                        onPressed: _submitForm
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
