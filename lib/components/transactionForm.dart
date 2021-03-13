@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 // Components
 import './adaptive/adaptiveButton.dart';
 import './adaptive/adaptiveTextField.dart';
+import './adaptive/adaptiveDatePicker.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
@@ -29,23 +30,6 @@ class _TransactionFormState extends State<TransactionForm> {
     }
 
     return widget.onSubmit(title, value, _selectedDate);
-  }
-
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2021),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if(pickedDate == null) {
-        return;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
   }
 
   Widget build(BuildContext context) {
@@ -79,28 +63,13 @@ class _TransactionFormState extends State<TransactionForm> {
                 label: 'Valor (R\$)',
               ),
 
-              Container(
-                height: 70,
-                alignment: Alignment.bottomCenter,
-
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                          _selectedDate == null ? 'Nenhuma data selecionada!!'
-                              : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}'
-                      ),
-                    ),
-
-                    FlatButton(
-                        onPressed: _showDatePicker,
-                        textColor: Theme.of(context).primaryColor,
-
-                        child: Text('Selecionar Data', style: TextStyle(
-                            fontWeight: FontWeight.w600
-                        ))),
-                  ],
-                ),
+              AdaptiveDatePicker(
+                selectedDate: _selectedDate,
+                onDateChange: (newDate) {
+                  setState(() {
+                    _selectedDate = newDate;
+                  });
+                },
               ),
 
               Container(
